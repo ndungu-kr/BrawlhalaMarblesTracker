@@ -17,6 +17,9 @@ def create_app():
     from . import models
 
     from .routes import main
-    app.register_blueprint(main)
+    from .auth import auth
+
+    app.register_blueprint(main, url_prefix='/')
+    app.register_blueprint(auth, url_prefix='/')
 
     return app
