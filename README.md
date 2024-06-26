@@ -31,6 +31,14 @@ Upgrade your pip if need be using:
 
 python -m pip install --upgrade pip
 
+## Step 4:
+
+Create a .env file in the same directory with the following:
+
+DB_SECRET_KEY=SECRET@123
+
+The DB_SECRET_KEY can be anything.
+
 # DB Migrations
 
 ## Making Changes to the DB
