@@ -11,4 +11,11 @@ div.form-signin.w-100.m-auto.text-center div.form-floating:focus-within {
     z-index: 2;
 }
 
+div.form-floating.no-bottom {
+    margin-bottom: -1px;
+}
+
+div.form-floating.big-bottom {
+margin-bottom: 10px;
+}
 /* --------------------------------- End of CSS for login and sign-up -------------------------------- */
