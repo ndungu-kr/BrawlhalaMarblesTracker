@@ -1,0 +1,14 @@
+/* --------------------------------- CSS for login and sign-up -------------------------------- */
+
+/* .form-signin  */
+div.form-signin.w-100.m-auto.text-center {
+    max-width: 500px;
+    padding: 15px;
+}
+
+/* .form-signin .form-floating:focus-within  */
+div.form-signin.w-100.m-auto.text-center div.form-floating:focus-within {
+    z-index: 2;
+}
+
+/* --------------------------------- End of CSS for login and sign-up -------------------------------- */

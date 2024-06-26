@@ -1,0 +1,30 @@
+{% extends "login_base.html"%}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="form-signin w-100 m-auto text-center">
+    <form method="POST">
+        <h1 class="h1 mb-3 fw-bold text-uppercase" href="#">For The Marbles</h1>
+        <h1 class="h5 mb-3 fw-normal">Please sign in</h1>
+
+        <div class="form-floating">
+            <input id="email" name="email" type="email" class="form-control" placeholder="name@example.com">
+            <label for="email">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input id="password" name="password" type="password" style="margin-bottom: 10px;" class="form-control" placeholder="Password">
+            <label for="password">Password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <h6 class="h6 mt-3 mb-3 fw-normal">Don't have an account? <a href="/sign-up">Sign up</a></h6>
+    </form>
+</div>
+
+{% endblock %}
