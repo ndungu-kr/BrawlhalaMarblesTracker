@@ -14,12 +14,15 @@ git clone https://github.com/ndungu-kr/BrawlhalaMarblesTracker.git
 
 In the same directory as tha main.py file, create a virtual environment using the command:
 
-py -m venv .venv
+python3 -m venv .venv
 
 Activate your virtual environment if necessary using:
 
 Windows:
 .venv\bin\Activate.bat
+
+Mac:
+source .venv/bin/activate
 
 ## Step 3:
 
