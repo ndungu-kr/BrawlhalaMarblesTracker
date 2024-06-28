@@ -1,14 +1,18 @@
 from . import db
+from flask_login import UserMixin
 
 
 # Users Table
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(50), nullable=False)
-    brawlhala_id = db.Column(db.Integer, nullable=False)
-    brawlhala_name = db.Column(db.String(100), nullable=False)
+    brawlhala_id = db.Column(db.Integer, nullable=True)
+    brawlhala_name = db.Column(db.String(100), nullable=True)
+    groups = db.relationship('Group', backref="groups", lazy=True)
+    matches = db.relationship('Match', backref="matches", lazy=True)
+    marbles = db.relationship('MarbleHistory', backref="marbles", lazy=True)
 
 
 # Groups Table
@@ -24,6 +28,8 @@ class Group(db.Model):
     member_six = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     member_seven = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     member_eight = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    matches = db.relationship('Match', backref="matches", lazy=True)
+    marbles = db.relationship('MarbleHistory', backref="marbles", lazy=True)
 
 
 # Matches Table
@@ -39,7 +45,7 @@ class Match(db.Model):
     sixth_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     seventh_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     eighth_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    verified_by = db.Column(db.String, db.ForeignKey('user.brawlhala_id'), nullable=False)
+    verified_by = db.Column(db.String, db.ForeignKey('user.id'), nullable=True)
 
 
 # MarbleHistory Table
