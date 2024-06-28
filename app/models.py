@@ -2,7 +2,6 @@ from . import db
 from flask_login import UserMixin
 
 
-# Users Table
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
@@ -10,50 +9,46 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(50), nullable=False)
     brawlhala_id = db.Column(db.Integer, nullable=True)
     brawlhala_name = db.Column(db.String(100), nullable=True)
-    groups = db.relationship('Group', backref="groups", lazy=True)
-    matches = db.relationship('Match', backref="matches", lazy=True)
-    marbles = db.relationship('MarbleHistory', backref="marbles", lazy=True)
+    groups = db.relationship('GroupMember', backref="user", lazy=True)
+    matches = db.relationship('MatchParticipant', backref="user", lazy=True)
+    marbles = db.relationship('MarbleHistory', backref="user", lazy=True)
 
 
-# Groups Table
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False)
-    member_one = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    member_two = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    member_three = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    member_four = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    member_five = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    member_six = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    member_seven = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    member_eight = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    matches = db.relationship('Match', backref="matches", lazy=True)
-    marbles = db.relationship('MarbleHistory', backref="marbles", lazy=True)
+    members = db.relationship('GroupMember', backref="group", lazy=True)
+    matches = db.relationship('Match', backref="group", lazy=True)
+    marbles = db.relationship('MarbleHistory', backref="group", lazy=True)
 
 
-# Matches Table
+class GroupMember(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
 class Match(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False)
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
-    winner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    second_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    third_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    fourth_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    fifth_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    sixth_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    seventh_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    eighth_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    verified_by = db.Column(db.String, db.ForeignKey('user.id'), nullable=True)
+    verified_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
 
-# MarbleHistory Table
+class MatchParticipant(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    match_id = db.Column(db.Integer, db.ForeignKey('match.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    position = db.Column(db.Integer, nullable=False)  # 1 for winner, 2 for second, etc.
+
+
 class MarbleHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)  
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=True)
     defence_matches = db.Column(db.Integer, default=0)
 
+    
